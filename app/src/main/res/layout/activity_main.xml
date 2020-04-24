@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity"
+        android:padding="10dp"
+        android:background="@color/colorBackground"
+
+>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp">
+
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@android:drawable/ic_menu_mapmode"
+                    android:background="@null"
+                    android:id="@+id/regionButton"
+                    android:layout_weight="1"/>
+            <TextView
+                    android:text="Region"
+                    android:layout_marginTop="5dp"
+                    android:textAlignment="center"
+                    android:layout_width="180dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/regionName"
+                    android:layout_weight="1"
+                    android:textColor="@color/fontOne"/>
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@android:drawable/ic_menu_rotate"
+                    android:id="@+id/getBtn"
+                    android:background="@null"
+                    android:layout_weight="1"/>
+
+        </LinearLayout>
+        <TextView
+                android:text="Cases: "
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/fontTwo"
+                android:textSize="14dp"
+                android:id="@+id/result1"/>
+        <TextView
+                android:text="New cases: "
+                android:textAlignment="center"
+                android:textColor="@color/fontThree"
+                android:layout_width="match_parent"
+                android:textSize="10dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/newCases"/>
+        <TextView
+                android:text="Active cases: "
+                android:padding="22dp"
+                android:layout_marginTop="30dp"
+                android:textAlignment="center"
+                android:textColor="#644682"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/activeCases"/>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                    android:text="Deaths: "
+                    android:textAlignment="center"
+                    android:textColor="#ba2b2b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/result2"
+                    android:layout_weight="1"/>
+            <TextView
+                    android:text="Recovered: "
+                    android:textColor="#005A5A"
+                    android:textAlignment="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/result3"
+                    android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+        android:layout_marginTop="20dp">
+            <TextView
+                    android:text="Data source: https://www.worldometers.info/coronavirus/"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="10dp"
+                    android:textColor="@color/fontOne"
+            />
+            <TextView
+                    android:text="Chart: https://github.com/PhilJay/MPAndroidChart/"
+                    android:layout_width="match_parent"
+                    android:textSize="10dp"
+                    android:textColor="@color/fontOne"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+            />
+            <com.github.mikephil.charting.charts.PieChart android:layout_height="match_parent"
+                                                          android:layout_width="match_parent"
+                                                          android:id="@+id/pieChart"
+            >
+
+            </com.github.mikephil.charting.charts.PieChart>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

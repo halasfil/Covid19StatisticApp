@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.icu.text.DecimalFormat;
 import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AlertDialog;
@@ -177,6 +178,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void getDataForCountry(final String regionGiven) {
+
+        Toast.makeText(MainActivity.this,"Fetching data...",Toast.LENGTH_SHORT).show();
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -192,34 +196,33 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     //connect to main worldofmeters website
                     Document document = Jsoup.connect("https://www.worldometers.info/coronavirus/").get();
-
                     //go thru table in website to find the element we want to extract
                     for (Element row : document.select("table#main_table_countries_today tr")) {
                         //arguments that we are looking for
                         if (row.select("td:nth-of-type(1)").text().equals(country.toString())) {
                             //extracting particular data from the row
                             //creating String with StringBuilder
-                            if (row.select("td:nth-of-type(2)").text().equals("")) {
+                            if (row.select("td:nth-of-type(2)").text().equals("") || row.select("td:nth-of-type(2)").text().equals("N/A")) {
                                 numberOfCases.append("0");
                             } else {
                                 numberOfCases.append(row.select("td:nth-of-type(2)").text());
                             }
-                            if (row.select("td:nth-of-type(4)").text().equals("")) {
+                            if (row.select("td:nth-of-type(4)").text().equals("") || row.select("td:nth-of-type(4)").text().equals("N/A")) {
                                 numberOfDeaths.append("0");
                             } else {
                                 numberOfDeaths.append(row.select("td:nth-of-type(4)").text());
                             }
-                            if (row.select("td:nth-of-type(6)").text().equals("")) {
+                            if (row.select("td:nth-of-type(6)").text().equals("") || row.select("td:nth-of-type(6)").text().equals("N/A")){
                                 numberOfRecovered.append("0");
                             } else {
                                 numberOfRecovered.append(row.select("td:nth-of-type(6)").text());
                             }
-                            if (row.select("td:nth-of-type(3)").text().equals("")) {
+                            if (row.select("td:nth-of-type(3)").text().equals("") || row.select("td:nth-of-type(3)").text().equals("N/A")) {
                                 numberOfNewCases.append("0");
                             } else {
                                 numberOfNewCases.append(row.select("td:nth-of-type(3)").text());
                             }
-                            if (row.select("td:nth-of-type(7)").text().equals("")) {
+                            if (row.select("td:nth-of-type(7)").text().equals("") || row.select("td:nth-of-type(7)").text().equals("N/A")) {
                                 numberOfActiveCases.append("0");
                             } else {
                                 numberOfActiveCases.append(row.select("td:nth-of-type(7)").text());
@@ -227,12 +230,21 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     //setting data needed for the chart. migrating from string to integer
-                    deaths = Integer.parseInt(numberOfDeaths.toString().replace(",", ""));
-                    recovered = Integer.parseInt(numberOfRecovered.toString().replace(",", ""));
-                    activeSick = Integer.parseInt(numberOfActiveCases.toString().replace(",", ""));
+
+                        deaths = Integer.parseInt(numberOfDeaths.toString().replace(",", ""));
+                        recovered = Integer.parseInt(numberOfRecovered.toString().replace(",", ""));
+                        activeSick = Integer.parseInt(numberOfActiveCases.toString().replace(",", ""));
 
 
-                } catch (IOException e) {
+                } catch (final IOException e) {
+
+                    runOnUiThread(new Runnable()
+                    {
+                        public void run()
+                        {
+                            Toast.makeText(getApplicationContext(), "Error: " + e + ". Check your internet connection.", Toast.LENGTH_LONG).show();
+                        }
+                    });
                     e.printStackTrace();
                 }
 

@@ -61,12 +61,15 @@ public class MainActivity extends AppCompatActivity {
 
 
         regionName.setText(selectedRegionName);
+
         getDataForCountry(selectedRegionName);
 
         getBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 getDataForCountry(regionName.getText().toString());
+
             }
         });
 
@@ -178,7 +181,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void getDataForCountry(final String regionGiven) {
 
-        Toast.makeText(MainActivity.this,"Fetching data...",Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(MainActivity.this, "Fetching data...", Toast.LENGTH_SHORT).show();
 
         new Thread(new Runnable() {
             @Override
@@ -211,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
                             } else {
                                 numberOfDeaths.append(row.select("td:nth-of-type(5)").text());
                             }
-                            if (row.select("td:nth-of-type(7)").text().equals("") || row.select("td:nth-of-type(7)").text().equals("N/A")){
+                            if (row.select("td:nth-of-type(7)").text().equals("") || row.select("td:nth-of-type(7)").text().equals("N/A")) {
                                 numberOfRecovered.append("0");
                             } else {
                                 numberOfRecovered.append(row.select("td:nth-of-type(7)").text());
@@ -230,32 +234,35 @@ public class MainActivity extends AppCompatActivity {
                     }
                     //setting data needed for the chart. migrating from string to integer
 
-                        deaths = Integer.parseInt(numberOfDeaths.toString().replace(",", ""));
-                        recovered = Integer.parseInt(numberOfRecovered.toString().replace(",", ""));
-                        activeSick = Integer.parseInt(numberOfActiveCases.toString().replace(",", ""));
+                    deaths = Integer.parseInt(numberOfDeaths.toString().replace(",", ""));
+                    recovered = Integer.parseInt(numberOfRecovered.toString().replace(",", ""));
+                    activeSick = Integer.parseInt(numberOfActiveCases.toString().replace(",", ""));
 
 
                 } catch (final IOException e) {
 
-                    runOnUiThread(new Runnable()
-                    {
-                        public void run()
-                        {
+                    runOnUiThread(new Runnable() {
+                        public void run() {
                             Toast.makeText(getApplicationContext(), "Error: " + e + ". Check your internet connection.", Toast.LENGTH_LONG).show();
+
+
+
+                            regionName.setText(country.toString());
+                            casesTxt.setText("Cases: " + "1");
+                            deathsTxt.setText("Deaths: " + "1");
+                            recoveredTxt.setText("Recovered: " + "1");
+                            newCases.setText("New cases: " + "1");
+                            activeCases.setText("Active cases: " + "1");
+                            pieChart.setVisibility(View.VISIBLE);
+                            deaths = 1;
+                            recovered = 1;
+                            activeSick = 1;
+                            addDataToPieChart(deaths, recovered, activeSick);
+                            e.printStackTrace();
                         }
                     });
-                    regionName.setText(country.toString());
-                    casesTxt.setText("Cases: " + "1");
-                    deathsTxt.setText("Deaths: " + "1");
-                    recoveredTxt.setText("Recovered: " + "1");
-                    newCases.setText("New cases: " + "1");
-                    activeCases.setText("Active cases: " + "1");
-                    pieChart.setVisibility(View.VISIBLE);
-                    deaths = 1;
-                    recovered = 1;
-                    activeSick = 1;
-                    addDataToPieChart(deaths, recovered, activeSick);
-                    e.printStackTrace();
+
+
                 }
 
                 runOnUiThread(new Runnable() {
@@ -274,14 +281,10 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         }).start();
-
     }
-
-
 }
 
 class MyFormatter implements IValueFormatter {
-
     private DecimalFormat mFormat;
 
     public MyFormatter() {
@@ -295,6 +298,4 @@ class MyFormatter implements IValueFormatter {
     public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
         return mFormat.format(value);
     }
-
-
 }

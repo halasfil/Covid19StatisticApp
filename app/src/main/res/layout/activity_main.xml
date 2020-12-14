@@ -97,13 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
         android:layout_marginTop="20dp">
-            <TextView
-                    android:text="Data source: https://www.worldometers.info/coronavirus/"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="10dp"
-                    android:textColor="@color/fontOne"
-            />
+
             <TextView
                     android:text="Chart: https://github.com/PhilJay/MPAndroidChart/"
                     android:layout_width="match_parent"
